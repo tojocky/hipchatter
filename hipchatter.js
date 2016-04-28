@@ -75,6 +75,46 @@ Hipchatter.prototype = {
     history: function(room, callback){
         this.request('get', 'room/'+room+'/history', callback);
     },
+    // Get history from user
+    // Takes either a room id or room name as a parameter
+    // https://www.hipchat.com/docs/apiv2/method/view_history
+    private_history: function(user, payload, callback){
+        if(typeof user === 'function') {
+            callback = user;
+            user = this.defaultUser;
+        }
+
+        if(!user) {
+            throw 'Please define the user or a default user'
+        }
+
+        this.request('get', 'user/'+user+'/history', payload, callback);
+    },
+    // Get history from user
+    // Takes either a room id or room name as a parameter
+    // https://www.hipchat.com/docs/apiv2/method/view_history
+    private_history_latest: function(user, payload, callback){
+        if(typeof user === 'function') {
+            callback = user;
+            user = this.defaultUser;
+        }
+
+        if(!user) {
+            throw 'Please define the user or a default user'
+        }
+
+        this.request('get', 'user/'+user+'/history/latest', payload, callback);
+    },
+    // Get history from user
+    // Takes either a room id or room name as a parameter
+    // https://www.hipchat.com/docs/apiv2/method/view_history
+    share_private_link: function(user, payload, callback){
+        if(!user) {
+            throw 'Please define the user or a default user'
+        }
+
+        this.request('post', 'user/'+user+'/share/link', payload, callback);
+    },
     // Get all users
     // https://www.hipchat.com/docs/apiv2/method/get_all_users
     users: function(params, callback) {
